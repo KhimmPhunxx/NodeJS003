@@ -17,6 +17,7 @@ import ProductDashboard from './page-dashboard/product/ProductDashboard';
 import CartDashoard from './page-dashboard/cart/CartDashoard';
 import HomePage from './page/home/HomePage';
 
+
 function App() {
   return (
       <BrowserRouter>
@@ -25,13 +26,14 @@ function App() {
           {/* Web-FrontEnd */}
           <Route path="/" element={<Layout />}>
               <Route path="" element={<HomePage/>} />
-              <Route path='/about' element={<AboutPage/>} />
+              <Route path='/category' element={<CategoryPage/>} />
+              {/* <Route path='/about' element={<AboutPage/>} />
               <Route path='/customer' element={<CustomerPage/>} />
               <Route path='/user' element={<UserPage/>} />
               <Route path='/product' element={<ProductPage/>} />
-              <Route path='/category' element={<CategoryPage/>} />
+              <Route path='/cart' element={<CartDashoard/>} />
               <Route path='/login' element={<LoginPage/>} />
-              <Route path='*' element={<PageNotFound/>} />
+              <Route path='*' element={<PageNotFound/>} /> */}
           </Route>
 
           {/* Web-Backend */}

@@ -38,7 +38,7 @@ export default function CarouselHomeSlider() {
       
     ]
   return (
-    <Carousel autoplay autoplaySpeed={1000}>
+    <Carousel autoplay autoplaySpeed={2000}>
         
         {
             carouselSlie.map((item, index) => (
