@@ -1,7 +1,10 @@
 
-const e = require("express");
 const db = require("../util/db");
 const { isEmptyOrNull } = require("../util/service");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const { KEY_TOKEN } = require("../util/service");
+const { getPermissionByUser } = require("./auth.controller");
 
 const getAll = (req,res) => {
     var sql = "SELECT * FROM employee";
@@ -37,6 +40,84 @@ const getone = (req,res) => {
             })
         } 
     })
+}
+
+const login =  async (req,res) =>{
+    var {username,password} = req.body;
+    var messsage = {}
+    if(isEmptyOrNull(username)){messsage.username = "Please fill in username"}
+    if(isEmptyOrNull(password)){messsage.password = "Please fill in password"}
+    if(Object.keys(messsage).length > 0){
+        res.json({
+            error:true,
+            message:messsage
+        })
+        return false;
+    }
+    var user = await db.query("SELECT * FROM employee WHERE tel = ?",[username]);
+    if(user.length > 0){
+        var passDb = user[0].password;
+        var isCorrect = bcrypt.compareSync(password,passDb);
+        if(isCorrect){
+            var user = user[0];
+            delete user.password;
+            var permission = await getPermissionByUser(user.employee_id);
+            var obj = {
+                user:user,
+                permission:permission
+            }
+            var access_token = jwt.sign({data:{...obj}},KEY_TOKEN,{expiresIn:"1h"});
+            var refresh_token = jwt.sign({data:{...obj}},KEY_TOKEN);
+            res.json({
+                ...obj,
+                access_token : access_token,
+                refresh_token : refresh_token,
+            })
+        }else{
+            res.json({
+                error:true,
+                message:"Password is incorrect"
+            })
+        }
+    }else{
+       res.json({
+              message:"Acount don't exist!. Please go to register",
+              error:true,
+         })
+    }
+}
+
+const setPassword = async (req,res) => {
+    var {
+        username,
+        password
+    } = req.body;
+    var message = {}
+    if(isEmptyOrNull(username)){message.username = "Pleas fill username"}
+    if(isEmptyOrNull(password)){message.password = "Pleas fill password"}
+    if(Object.keys(message).length > 0){
+        res.json({
+            message : message,
+            error : true
+        })
+        return;
+    }
+
+    var employee = await db.query("SELECT * FROM employee WHERE tel = ?",[username]);
+    if(employee.length > 0){
+        // var passDb = user[0].password;
+        var passwordGenerate = await bcrypt.hash(password,10);
+        var update = await db.query("UPDATE employee SET password = ? WHERE tel = ?",[passwordGenerate,username]);
+        res.json({
+            message:"Password change successfully!!"
+        })
+    }else{
+       res.json({
+              message:"Acount don't exist!. Please go to register",
+              error:true,
+         })
+    }
+
 }
 
 const create = (req,res) => {
@@ -78,7 +159,7 @@ const create = (req,res) => {
         base_salary,
         address,
         province,
-        country
+        country,
     ];
     db.query(sql,param_create,(err,result)=>{
         if(err) { // has error
@@ -182,5 +263,7 @@ module.exports = {
     getone,
     create,
     update,
-    remove
+    remove,
+    login,
+    setPassword
 }

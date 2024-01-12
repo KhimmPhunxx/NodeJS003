@@ -2,38 +2,37 @@
 const db = require('../util/db');
 const { isEmptyOrNull } = require('../util/service');
 
-const getAll = (req,res) =>{
-    var sql = "SELECT * FROM category";
-    db.query(sql,(err,result)=>{
-        if(err){
-            res.json({
-                message:err,
-                error:true
-            })
-        }else{
-            res.json({
-                total : 2000,
-                data:result
-            })
-        }
+const getAll = async (req,res) =>{
+    const data_category = await db.query("SELECT * FROM category");
+    res.json({
+        data_category : data_category,
     })
 }
 
-const getone = (req,res) =>{
-    var id = req.params.id;
-    var sql = "SELECT * FROM category WHERE category_id = ?";
-    db.query(sql,[id],(err,result)=>{
-        if(err){
-            res.json({
-                message:err,
-                error:true
-            })
-        }else{
-            res.json({
-                data:result
-            })
-        }
+const getone = async (req,res) =>{
+    // ----------- use Async Await function -----------
+    const {id} = req.params;
+    // ----- query from database mysql with xampp ------
+    const data_category = await db.query("SELECT * FROM category WHERE category_id = ?",[id]); 
+    res.json({
+        data_category : data_category,
     })
+
+    // ----------use Promise function -----------
+    // var id = req.params.id;
+    // var sql = "SELECT * FROM category WHERE category_id = ?";
+    // db.query(sql,[id],(err,result)=>{
+    //     if(err){
+    //         res.json({
+    //             message:err,
+    //             error:true
+    //         })
+    //     }else{
+    //         res.json({
+    //             data:result
+    //         })
+    //     }
+    // })
 }
 
 const create = (req,res) =>{

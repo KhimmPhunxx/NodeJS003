@@ -16,6 +16,9 @@ import CategoryDashboard from './page-dashboard/category/CategoryDashboard';
 import ProductDashboard from './page-dashboard/product/ProductDashboard';
 import CartDashoard from './page-dashboard/cart/CartDashoard';
 import HomePage from './page/home/HomePage';
+import LayoutDashboardLogin from './component/layout/LayoutDashboardLogin';
+import LoginDashboard from './page-dashboard/login/LoginDashboard';
+import ResgisterDashboard from './page-dashboard/resgister/ResgisterDashboard';
 
 
 function App() {
@@ -39,11 +42,17 @@ function App() {
           {/* Web-Backend */}
           <Route path='/dashboard' element={<LayoutDashboard/>}>
                 <Route path='' element={<HomeDashboard />}/>
+                <Route path='category' element={<CategoryDashboard/>}/>
                 <Route path='customer' element={<CustomerDashboard/>}/>
                 <Route path='user' element={<UserDashboard/>}/>
                 <Route path='cart' element={<CartDashoard/>}/>
-                <Route path='category' element={<CategoryDashboard/>}/>
                 <Route path='product' element={<ProductDashboard/>}/>
+          </Route>
+
+           {/* Web-Backend Login and Register */}
+           <Route path='/dashboard/' element={<LayoutDashboardLogin/>}>
+                <Route path='login' element={<LoginDashboard />}/>
+                <Route path='register' element={<ResgisterDashboard />}/>
           </Route>
         </Routes>
       </BrowserRouter>

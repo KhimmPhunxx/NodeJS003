@@ -1,6 +1,7 @@
 // connect to database
 
-const mysql = require('mysql2');
+const mysql = require('mysql');
+const util = require("util")
 
 const db = mysql.createConnection({
     host : 'localhost',
@@ -8,5 +9,7 @@ const db = mysql.createConnection({
     password : '',
     database : 'preycode_g1'
 })
+
+db.query = util.promisify(db.query).bind(db) // util.promisify
 
 module.exports = db; // export module

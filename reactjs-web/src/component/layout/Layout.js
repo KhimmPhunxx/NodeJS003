@@ -40,7 +40,7 @@ export default function Layout() {
 
   return (
     <>
-    <header className='bg-blue-900 h-[50px] p-3 Manrope sticky top-0 z-30'>
+    <header className='bg-blue-900 h-[52px] p-[12px] Manrope sticky top-0 z-30'>
         <div className='menuContain max-w-6xl mx-auto flex  justify-between'>
             <h1 onClick={() => onClickMenu("/")} className='txtNameBrand text-xl font-bold cursor-pointer text-white'>PREYCODE</h1>
             <ul className='flex space-x-8 p-1 font-medium cursor-pointer text-sm'>
@@ -80,16 +80,16 @@ export default function Layout() {
             <div className='space-y-3'>
                 <h1 className='text-white font-bold text-xl'>Contact</h1>
                 <div className='flex text-gray-400 space-x-2 text-xl'>
-                    <h1 className='font-bold text-gray-200'>Email: </h1> 
-                    <h1><a href=""> 1231sada@gmail.coom</a></h1>
+                    <h1 className='font-bold text-gray-200 text-xl'>Email: </h1> 
+                    <h1 className='text-xl'><a href=""> 1231sada@gmail.coom</a></h1>
+                </div>
+                <div className='flex text-gray-400 space-x-2'>
+                    <h1 className='font-bold text-gray-200 text-xl'>Phone: </h1> 
+                    <h1 className='text-xl'><a href=""> +855 123 123</a></h1>
                 </div>
                 <div className='flex text-gray-400 space-x-2 text-xl'>
-                    <h1 className='font-bold text-gray-200'>Phone: </h1> 
-                    <h1><a href=""> +855 123 123</a></h1>
-                </div>
-                <div className='flex text-gray-400 space-x-2 text-xl'>
-                    <h1 className='font-bold text-gray-200'>Address: </h1> 
-                    <h1><a> Phnom Penh, Cambodia</a></h1>
+                    <h1 className='font-bold text-gray-200 text-xl'>Address: </h1> 
+                    <h1 className='text-xl'><a> Phnom Penh, Cambodia</a></h1>
                 </div>
 
 
