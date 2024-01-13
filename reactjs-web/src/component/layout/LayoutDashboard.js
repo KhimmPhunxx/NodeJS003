@@ -1,22 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import {
-  LogoutOutlined,
-  NotificationFilled,
   TeamOutlined,
 } from '@ant-design/icons';
-import { Avatar, Badge, Breadcrumb, Button, Input, Layout, Menu, theme } from 'antd';
+import { Avatar, Badge, Button,  Layout, Menu, theme } from 'antd';
 import { Outlet, useNavigate } from 'react-router-dom';
 import './LayoutDashboard.css'
-import { FaBook, FaHome, FaPeopleArrows } from 'react-icons/fa';
-import { MdCategory } from 'react-icons/md';
+import { FaBook, FaCartArrowDown,  FaLuggageCart,  FaMap, FaPeopleArrows, } from 'react-icons/fa';
+import { MdCategory, MdGolfCourse, MdHome, MdList, MdPayment, MdPeople, MdProductionQuantityLimits, MdRollerShades, MdSignalWifiStatusbar1Bar, MdSummarize } from 'react-icons/md';
+import { IoIosPeople } from "react-icons/io";
 import PC_logo from '../../assets/logo/PreyCode_logo.png'
 import { Dropdown } from 'antd';
 import { getUser } from '../../share/helper';
 
 const { Header, Content, Footer, Sider } = Layout;
 
-function getItem(label,key,icon,children,
-){
+function getItem(label,key,icon,children,){
   return { 
     key,
     icon, 
@@ -26,22 +24,33 @@ function getItem(label,key,icon,children,
 }
 
 const items = [
-    getItem('Dashboard', '/dashboard', <FaHome />),
-    getItem('Category', '/dashboard/category', <MdCategory />),
-    getItem('Employee', '/dashboard/employee', <FaPeopleArrows />),
-    getItem('Report', 'report', <FaBook />, [
-    getItem('Tom', '3'),
-    getItem('Bill', '4'),
-    getItem('Alex', '5'),
-    getItem('Tom', '6'),
-    getItem('Bill', '7'),
-  ]),
-  getItem('Team', 'sub2', <TeamOutlined />, 
-  [
-    getItem('Team 1', '6'), 
-    getItem('Team 2', '8')
-]),
-  getItem('Lodout', '9', <LogoutOutlined />),
+    getItem('Dashboard', '/dashboard', <MdHome/>),
+    getItem('Customer', '/dashboard/customer', <FaPeopleArrows />),
+    getItem('Employee', '/dashboard/employee', <IoIosPeople />),
+    getItem('Order', '/dashboard/order', <FaCartArrowDown />),
+
+    getItem('Product', '/dashboard/product', <FaLuggageCart />, [
+      getItem('Category', '/dashboard/product/category', <MdCategory />),
+      getItem('Product', '/dashboard/product/productlist', <MdList />),
+    ]),
+
+    getItem('User', '', <MdPeople />, [
+      getItem('Role', '/dashboard/user/role', <MdRollerShades />),
+      getItem('User Role', '/dashboard/user/user_role', <MdPeople />),
+    ]),
+
+    getItem('System', '/dashboard/system', <FaBook />, [
+      getItem('Order Status', '/dashboard/system/order_status', <MdSignalWifiStatusbar1Bar />),
+      getItem('Order Payment', '/dashboard/system/order_payment', <MdPayment />),
+      getItem('Province', '/dashboard/system/province', <FaMap />),
+    ]),
+
+    getItem('Report', '/dashboard/report', <TeamOutlined />, [
+      getItem('Top Sale', '/dashboard/report/top_sale' , <MdGolfCourse />),
+      getItem('Sale Summary', '/dashboard/report/sale_summary' , <MdSummarize/> ),
+      getItem('Sold By Category', '/dashboard/report/sold_by_category' , <MdCategory />),
+      getItem('Sold By Product', '/dashboard/report/sold_by_product', <MdProductionQuantityLimits /> ),
+    ]),
 ];
 
 // LocalStorage
@@ -116,7 +125,7 @@ const LayoutDashboard = () => {
         </Sider>
         <Layout>
 
-            <Header style={{ padding: 20, background: colorBgContainer }} className='flex justify-between'>
+            <Header style={{ padding: 15, background: colorBgContainer }} className='flex justify-between'>
                 <div className='flex'>
                     <img className='h-9 mr-3' src={PC_logo} alt="" />
                     <h1 className='Manrope text-2xl font-bold text-gray-800'>PREYCODE Backend</h1>  
@@ -155,10 +164,6 @@ const LayoutDashboard = () => {
                 </div>
             </Header>
             <Content style={{ margin: '10px 10px' }}>
-            {/* <Breadcrumb style={{ margin: '10px 0' }}>
-                <Breadcrumb.Item className='Manrope'>Api</Breadcrumb.Item>
-                <Breadcrumb.Item className='Manrope'>Build</Breadcrumb.Item>
-            </Breadcrumb> */}
             <div
                 style={{
                 padding: 5,
@@ -179,55 +184,3 @@ const LayoutDashboard = () => {
 };
 export default LayoutDashboard;
 
-
-
-// import React from 'react'
-// import './LayoutDashboard.css'
-// import { Outlet, useNavigate } from 'react-router-dom';
-
-// export default function LayoutDashboard() {
-//   const navigat = useNavigate();
-//   const onClickMenu = (routeName) => {
-//       navigat(routeName);
-//   }
-
-//   return (
-//     <>
-//     <header className='h-[52px] bg-gray-800 p-[12px] sticky top-0 z-30'>
-//         <section className='Manrope flex justify-between max-w-8xl mx-auto '>
-//             <h1 className='text-xl font-bold text-gray-100'>PREYCODE Backend</h1>
-//             <ul className='flex p-1 space-x-8 text-sm text-gray-100 font-medium cursor-pointer'>
-//                 <li onClick={() => onClickMenu("/dashboard/")} className='hover:text-gray-400 hover:underline text-gray-100 hover:duration-300 '>
-//                   Home
-//                 </li>
-//                 <li onClick={() => onClickMenu("/dashboard/customer")} className='hover:text-gray-400 hover:underline text-gray-100 hover:duration-300'>
-//                    Customer
-//                 </li>
-//                 <li onClick={() => onClickMenu("/dashboard/user")} className='hover:text-gray-400 hover:underline text-gray-100 hover:duration-300'>
-//                     User
-//                 </li> 
-//                 <li onClick={() => onClickMenu("/dashboard/product")} className='hover:text-gray-400 hover:underline text-gray-100 hover:duration-300'>
-//                     Product
-//                 </li>
-//                 <li onClick={() => onClickMenu("/dashboard/category")} className='hover:text-gray-400 hover:underline text-gray-100 hover:duration-300' >
-//                     Category
-//                 </li>
-//                 <li onClick={() => onClickMenu("/dashboard/cart")} className='hover:text-gray-400 hover:underline text-gray-100 hover:duration-300'>
-//                     Cart
-//                 </li>
-               
-//             </ul>
-//             <div>
-//                 <button onClick={() => onClickMenu("/")} className='text-sm bg-gray-700 text-white px-3 py-1 rounded'>Login to Website</button>
-//             </div>
-//         </section>
-//     </header>
-//     <Outlet/>
-//     {/* <footer className='e-full h-72 bg-gray-800 mt-5'>
-//         <section >
-
-//         </section>
-//     </footer> */}
-//     </>
-//   )
-// }

@@ -1,6 +1,6 @@
 
 const db = require("../util/db");
-const { isEmptyOrNull } = require("../util/service");
+const { isEmptyOrNull, KEY_REFRESH } = require("../util/service");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { KEY_TOKEN } = require("../util/service");
@@ -66,8 +66,8 @@ const login =  async (req,res) =>{
                 user:user,
                 permission:permission
             }
-            var access_token = jwt.sign({data:{...obj}},KEY_TOKEN,{expiresIn:"1h"});
-            var refresh_token = jwt.sign({data:{...obj}},KEY_TOKEN);
+            var access_token = jwt.sign({data:{...obj}},KEY_TOKEN,{expiresIn:"30s"});
+            var refresh_token = jwt.sign({data:{...obj}},KEY_REFRESH);
             res.json({
                 ...obj,
                 access_token : access_token,
@@ -85,6 +85,43 @@ const login =  async (req,res) =>{
               error:true,
          })
     }
+}
+
+const refreshToken = async (req,res) => {
+    var {refresh_key} = req.body;
+    if(isEmptyOrNull(refresh_key)){
+        res.status(401).send({
+            message:"Unauthorized"
+        })
+    }else{
+        jwt.verify(refresh_key,KEY_REFRESH,async (err,result)=>{
+            if(err){
+                res.status(401).send({
+                    message:"Unauthorized",
+                    error: err
+                })
+            }else{
+
+                var username = result.data.user.tel;
+                var user = await db.query("SELECT * FROM employee WHERE tel = ?",[username]);
+                var user = user[0];
+                delete user.password;
+                var permission = await getPermissionByUser(user.employee_id);
+                var obj = {
+                    user:user,
+                    permission:permission
+                }
+                var access_token = jwt.sign({data:{...obj}},KEY_TOKEN,{expiresIn:"30s"});
+                var refresh_token = jwt.sign({data:{...obj}},KEY_REFRESH);
+                res.json({
+                    ...obj,
+                    access_token : access_token,
+                    refresh_token : refresh_token,
+                })
+            }
+        })
+    }
+
 }
 
 const setPassword = async (req,res) => {
@@ -265,5 +302,7 @@ module.exports = {
     update,
     remove,
     login,
-    setPassword
+    setPassword,
+    refreshToken
+    
 }

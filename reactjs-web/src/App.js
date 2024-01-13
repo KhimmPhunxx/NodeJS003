@@ -9,16 +9,40 @@ import PageNotFound from './page/rout-not-found/PageNotFound';
 import LoginPage from './page/login/LoginPage';
 import Layout from './component/layout/Layout';
 import LayoutDashboard from './component/layout/LayoutDashboard';
-import HomeDashboard from './page-dashboard/home/HomeDashboard';
-import CustomerDashboard from './page-dashboard/customer/CustomerDashboard';
-import UserDashboard from './page-dashboard/user/UserDashboard';
-import CategoryDashboard from './page-dashboard/category/CategoryDashboard';
-import ProductDashboard from './page-dashboard/product/ProductDashboard';
+
+
+import UserDashboard from './page-dashboard/user/UserRoleDashboard';
+
 import CartDashoard from './page-dashboard/cart/CartDashoard';
 import HomePage from './page/home/HomePage';
 import LayoutDashboardLogin from './component/layout/LayoutDashboardLogin';
 import LoginDashboard from './page-dashboard/login/LoginDashboard';
 import ResgisterDashboard from './page-dashboard/resgister/ResgisterDashboard';
+
+// Dashboard
+import CustomerDashboard from './page-dashboard/customer/CustomerDashboard';
+import HomeDashboard from './page-dashboard/home/HomeDashboard';
+import EmployeeDashboard from './page-dashboard/employee/EmployeeDashboard';
+import OrderDashboard from './page-dashboard/order/OrderDashboard'
+
+// Product
+import ProductDashboard from './page-dashboard/product/ProductDashboard';
+import CategoryDashboard from './page-dashboard/category/CategoryDashboard';
+
+// User
+import RoleDashboard from './page-dashboard/role/RoleDashboard';
+import UserRoleDashboard from './page-dashboard/user/UserRoleDashboard';
+
+// System
+import OrderStatusDash from './page-dashboard/system/OrderStatusDash';
+import OrderPaymentDash from './page-dashboard/system/OrderPaymentDash';
+import ProvinceDash from './page-dashboard/system/ProvinceDash';
+
+// Report
+import TopSaleDash from './page-dashboard/report/TopSaleDash';
+import SaleSummaryDash from './page-dashboard/report/SaleSummaryDash';
+import SoldByCategoryDash from './page-dashboard/report/SoldByCategoryDash';
+import SoldByProductDash from './page-dashboard/report/SoldByProductDash';
 
 
 function App() {
@@ -42,11 +66,33 @@ function App() {
           {/* Web-Backend */}
           <Route path='/dashboard' element={<LayoutDashboard/>}>
                 <Route path='' element={<HomeDashboard />}/>
-                <Route path='category' element={<CategoryDashboard/>}/>
                 <Route path='customer' element={<CustomerDashboard/>}/>
-                <Route path='user' element={<UserDashboard/>}/>
-                <Route path='cart' element={<CartDashoard/>}/>
-                <Route path='product' element={<ProductDashboard/>}/>
+                <Route path='employee' element={<EmployeeDashboard/>}/>
+                <Route path='order' element={<OrderDashboard/>}/>
+                
+                {/* Product */}
+                <Route path='product/category' element={<CategoryDashboard/>}/>
+                <Route path='product/productlist' element={<ProductDashboard/>}/>
+                
+                {/* User */}
+                <Route path='user/role' element={<RoleDashboard/>}/>
+                <Route path='user/user_role' element={<UserRoleDashboard/>}/>
+                
+                {/* System */}
+                <Route path='system/order_status' element={<OrderStatusDash/>}/>
+                <Route path='system/order_payment' element={<OrderPaymentDash/>}/>
+                <Route path='system/province' element={<ProvinceDash/>}/>
+                
+                {/* Report */}
+                <Route path='report/top_sale' element={<TopSaleDash/>}/>
+                <Route path='report/sale_summary' element={<SaleSummaryDash/>}/>
+                <Route path='report/sold_by_category' element={<SoldByCategoryDash/>}/>
+                <Route path='report/sold_by_product' element={<SoldByProductDash/>}/>
+
+
+                {/* <Route path='user' element={<UserDashboard/>}/>
+                <Route path='cart' element={<CartDashoard/>}/> */}
+                
           </Route>
 
            {/* Web-Backend Login and Register */}

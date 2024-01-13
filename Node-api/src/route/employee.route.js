@@ -11,6 +11,7 @@ const employee = (app,base_route) => {
     app.delete(`${base_route}/:id`, employeeController.remove);
     app.post(`${base_route}_login`, employeeController.login); 
     app.post(`${base_route}_set_password`, employeeController.setPassword);
+    app.post(`${base_route}_token_refresh`, employeeController.refreshToken);
 }
 
 module.exports = employee;

@@ -14,5 +14,6 @@ exports.invoiceNumber = (number) => {
     return "INV" + ivoice;
 }
 
-exports.KEY_TOKEN = "KHSDAB@#$12345";
+exports.KEY_TOKEN = "KHSDAB@#$12345r23";
+exports.KEY_REFRESH = "@#4523FKSREN^%#@#";
 

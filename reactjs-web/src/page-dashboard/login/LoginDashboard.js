@@ -3,6 +3,7 @@ import React from 'react';
 import { Button, Form,message, Input } from 'antd';
 import request from '../../share/request';
 import { useNavigate } from 'react-router-dom';
+import { storeUserData } from '../../share/helper';
 
 const LoginDashboard = () => {
 
@@ -18,12 +19,8 @@ const LoginDashboard = () => {
             setLoading(false);
             console.log(res)
             if(!res.error){
-                localStorage.setItem("access_token",res.access_token);
-                localStorage.setItem("refresh_token",res.refresh_token);
-                localStorage.setItem("user",JSON.stringify(res.user));
-                localStorage.setItem("permission",JSON.stringify(res.permission));
-                localStorage.setItem('isLogin', '1');
-                window.location.href = "/dashboard";
+                storeUserData(res);
+                navigate('/dashboard');
             }else{
                 message.error(res.message)
             }

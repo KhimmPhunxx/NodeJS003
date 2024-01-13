@@ -1,7 +1,12 @@
 import React from 'react'
+import { DashboardSaleChart } from './../charts/DashboardSaleChart';
 
 export default function HomeDashboard() {
   return (
-    <div>HomeDashboard</div>
+   <main>
+      <div>
+        <DashboardSaleChart />
+      </div>
+   </main>
   )
 }

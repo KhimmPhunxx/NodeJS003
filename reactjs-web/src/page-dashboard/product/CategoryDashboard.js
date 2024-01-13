@@ -226,8 +226,7 @@ export default function CategoryDashboard() {
                         Clear
                       </Button>
                       <Button variant="primary" onClick={onSave}>
-                        {item.category_id == null ? 'Save' : 'Update'} 
-                          
+                        {item.category_id == null ? 'Save' : 'Update'}
                       </Button>
                     </Modal.Footer>
                   </Modal>

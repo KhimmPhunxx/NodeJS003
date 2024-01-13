@@ -1,5 +1,6 @@
 // 
 import moment from 'moment';
+import { useNavigate } from 'react-router-dom';
 
 export const isEmptyOrNull = (value) => {
     return (value == null || value == "" || value == undefined) ? true : false;
@@ -49,7 +50,6 @@ export const getAccessToken = () => {
 export const getRefreshToken = () => {
     var refresh_token = localStorage.getItem('refresh_token');
     if(!isEmptyOrNull(refresh_token)){
-        refresh_token = JSON.parse(refresh_token);
         return refresh_token;
     }else{
         return null;
@@ -58,7 +58,7 @@ export const getRefreshToken = () => {
 
 export const formateDateClient = (date) => {
     if(!isEmptyOrNull(date)){
-        return moment(date).format("DD-MM-YYYY");
+        return moment(date).format("hh:mm DD-MM-YYYY");
     }
     return null;
 }
@@ -68,4 +68,19 @@ export const formateDateServer = (date) => {
         return moment(date).format("YYYY-MM-DD");
     }
     return null;
+}
+
+
+export const logout = () => {
+    localStorage.setItem('isLogin', '0');
+    window.location.href = "/dashboard/login";
+}
+
+export const storeUserData = (param) => {
+    localStorage.setItem("access_token",param.access_token);
+    localStorage.setItem("refresh_token",param.refresh_token);
+    localStorage.setItem("user",JSON.stringify(param.user));
+    localStorage.setItem("permission",JSON.stringify(param.permission));
+    localStorage.setItem('isLogin', '1');
+
 }
