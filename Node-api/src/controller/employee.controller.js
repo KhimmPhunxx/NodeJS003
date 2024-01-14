@@ -66,7 +66,7 @@ const login =  async (req,res) =>{
                 user:user,
                 permission:permission
             }
-            var access_token = jwt.sign({data:{...obj}},KEY_TOKEN,{expiresIn:"30s"});
+            var access_token = jwt.sign({data:{...obj}},KEY_TOKEN,{expiresIn:"1h"});
             var refresh_token = jwt.sign({data:{...obj}},KEY_REFRESH);
             res.json({
                 ...obj,
@@ -111,7 +111,7 @@ const refreshToken = async (req,res) => {
                     user:user,
                     permission:permission
                 }
-                var access_token = jwt.sign({data:{...obj}},KEY_TOKEN,{expiresIn:"30s"});
+                var access_token = jwt.sign({data:{...obj}},KEY_TOKEN,{expiresIn:"1h"});
                 var refresh_token = jwt.sign({data:{...obj}},KEY_REFRESH);
                 res.json({
                     ...obj,

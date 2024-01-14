@@ -3,11 +3,29 @@ const db = require("../util/db");
 const { isEmptyOrNull } = require("../util/service");
 
 const getlist = async (req, res) => {
-    let sql = "SELECT * FROM product";
+    let sql = "SELECT * FROM product ORDER BY product_id DESC";
+    var slqCategory = "SELECT * FROM category";
+    var barnd = [
+        {
+            id : 1,
+            name : "Apple"
+        },
+        {
+            id : 2,
+            name : "ASUS"
+        },
+        {
+            id : 1,
+            name : "Dell"
+        }
+    ]
     // join table category pagination
     const data = await db.query(sql);
+    const dataCategory = await db.query(slqCategory);
     res.json({
-        data: data
+        data: data,
+        data_category: dataCategory,
+        data_brand : barnd
     })
 }
 
@@ -92,13 +110,27 @@ const update = async (req, res) => {
         message: "Product updated successfully",
         data: data
     })
-  
+
+    // "category_id": 10,
+    // "barcode": "P005",
+    // "name": "MSI 2023",
+    // "quantity": -10,
+    // "price": 1399,
+    // "image": "",
+    // "description": "SSD 512TBG ,RAM 16 GB Dispay 16Inch",
+    // "is_active": "0",
+    // "create_at": "2024-01-10T06:46:59.000Z"
+
+    // let sql = "UPDATE product SET category_id = ?,barcode = ?,name = ?,quantity = ?,price = ?,image = ?,description = ? WHERE product_id = ?";
+    // let param = [category_id,barcode,name,quantity,price,image,description,product_id];
+    
+     
 }
 
 const remove = async (req, res) => {
     let {
         id
-    } = req.boy;
+    } = req.body;
     const sql = "DELETE FROM product WHERE product_id = ?";
     const data = await db.query(sql, [id]);
     res.json({
